@@ -137,52 +137,63 @@ int main(int argc, char** argv)
 	// }
 	vector<int> del;
 	vector<pair<int,int>> add;
-	int j = 0;
-	int i = 0;
-	while(i < of_container.size())
-	{
-		if (i <= res[res.size() - 1].x_index)
+    int j = 0;
+    int i = 0;
+    int k = 0;
+    while(i < of_container.size())
+    {
+        j = 0;
+        if (i <= res[res.size() - 1].x_index)
         {
-			if (i == res[i].x_index)
-			{
-				i++;
-				continue;
-			}
-			while ((i + j) != res[i].x_index)
-			{
-				del.push_back(i + j);
-				j++;
-			}
-		}
+            if (i == res[k].x_index)
+            {
+                i++;
+                k++;
+                continue;
+            }
+            while ((i + j) != res[k].x_index)
+            {
+                del.push_back(i + j);
+                j++;
+            }
+            i = i + j;
+            continue;
+        }
         else
         {
             del.push_back(i);
         }
-		i++;
-	}
-	j = 0;
-	i = 0;
+        i++;
+    }
+    j = 0;
+    i = 0;
+    k = 0;
     while (i < nf_container.size())
     {
-		if (i <= res[res.size() - 1].y_index)
-		{
-			if (i == res[i].y_index)
-			{
-				i++;
-				continue;
-			}
-			while ((i + j) != res[i].y_index)
-			{   
-				add.push_back(make_pair(i + j, nf_container[i]));
-				j++;
-			}
-		}
-		else
-		{
-			add.push_back(make_pair(i, nf_container[i]));
-		}
-		i++;
+        j = 0;
+        if (i <= res[res.size() - 1].y_index)
+        {
+            if (i == res[k].y_index)
+            {
+                i++;
+                k++;
+                continue;
+            }
+            while ((i + j) != res[k].y_index)
+            {
+                add.push_back(make_pair(i + j, nf_container[i]));
+                j++;
+            }
+            i = i + j;
+            continue;
+        }
+        else
+        {
+            add.push_back(make_pair(i, nf_container[i]));
+        }
+        i++;
     }
+
 	ofstream fout;
 	fout.open("diff.txt");
 	for (int i = 0; i < del.size(); ++i)
